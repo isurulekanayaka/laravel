@@ -55,7 +55,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>password</th>
                         <th>User Type</th>
                         <th>Action</th><th></th>
                     </tr>
