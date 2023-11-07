@@ -56,3 +56,21 @@ Route::get('/delete-post/{post}',[PostController::class,'Delete']);
 
 
 Route::put('/edit-post/{post}', [PostController::class, 'EditPost'])->name('update-post');
+
+
+Route::middleware('auth')->group(function () {
+
+    // Show edit form
+    Route::get('/edit-user/{user}', [UserController::class, 'ShowEdit']);
+    
+    // Update user
+    Route::put('/edit-user/{user}', [UserController::class, 'EditUser'])->name('update-user');
+    
+    // Delete user
+    Route::delete('/delete-user/{user}', [UserController::class, 'Delete']);
+
+    Route::post('/admin/adduser', [UserController::class, 'addUser'])->name('admin.adduser');
+
+    Route::get('/admin/adduser', [UserController::class, 'showAddUserForm'])->name('admin.adduser');
+    Route::post('/admin/adduser', [UserController::class, 'showAddUserForm'])->name('admin.adduser');
+});

@@ -68,8 +68,8 @@ class UserController extends Controller
 
     public function adminHome()
     {
-        $user = Auth::user();
-        return view('admin.home', compact('user'));
+        $users = \App\Models\User::all();
+        return view('admin.home', compact('users'));
     }
 
     public function logout()
@@ -88,5 +88,56 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect('/login');
+    }
+
+
+    public function ShowEdit(User $user)
+    {
+        if(auth()->user()->id !== $user->id)
+        {
+            return redirect('/');
+        }
+        return view('admin/home',['user'=>$user]);
+    }
+
+    public function EditUser(User $user, Request $request)
+    {
+        
+        $incomingFields = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email'
+        ]);
+
+        $user->update($incomingFields);
+        return redirect('admin/home');
+    }
+
+    public function Delete(User $user)
+    {
+            $user->delete();
+        
+        return redirect('admin/home');
+    }    
+
+    public function showAddUserForm(){
+        return view('admin.adduser');
+    }
+
+    public function addUser(Request $request){
+        // Validate the request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Create a new user
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('admin.adduser')->with('success', 'User added successfully!');
     }
 }

@@ -22,6 +22,11 @@
         .main-content {
             background-color: #f8f9fa;
         }
+        .table {
+            margin-top: 20px; /* Add margin to the top of the table */
+            margin-bottom: 20px; /* Add margin to the bottom of the table */
+            padding: 10px; /* Add padding inside the table */
+        }
     </style>
 </head>
 <body>
@@ -30,43 +35,80 @@
     <h1 class="mb-4">Welcome Admin, {{ Auth::user()->name }}</h1>
     <div class="container-fluid mt-4">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-                <div class="position-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Products
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Orders
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Customers
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
             
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-                <h1 class="h2 mt-4">Dashboard</h1>
-                <!-- Content for the dashboard goes here -->
-                <p>Welcome to the Admin Dashboard.</p>
-                <p>Here, you can manage products, orders, and customers.</p>
-                <p></p>
-                {{-- @foreach ($users as $user)
-                @dd($user); // Check if $user contains the expected data                 
-                @endforeach --}}
+            <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 main-content">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h2 mt-4">Dashboard</h1>
+                    <form action="{{ route('admin.adduser') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Add User</button>
+                    </form>                    
+                </div>
             </main>
+            
+
+            <br><br><br>
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>User Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <form action="{{ route('update-user', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <td>
+                                    <input type="text" name="name" value="{{ $user->name }}" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" name="email" value="{{ $user->email }}" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" name="user_type" value="{{ $user->user_type }}" class="form-control">
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <a href="#" onclick="deleteUser({{ $user->id }})" class="btn btn-danger">Delete</a>
+                                </td>
+                            </form>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+                
+            <script>
+                function deleteUser(userId) {
+                    if (confirm("Are you sure you want to delete this user?")) {
+                        // Send a DELETE request using JavaScript fetch API
+                        fetch(`/delete-user/${userId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('User deleted successfully');
+                                location.reload(); // Refresh the page
+                            } else {
+                                alert('Error deleting user');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                }
+            </script>
         </div>
     </div>
     @else

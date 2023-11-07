@@ -78,12 +78,13 @@
             <div class="form-group">
                 <select name="user_type" class="form-control" required>
                     <option value="user">User</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
             
             <button type="submit" class="btn btn-register">Register</button>
         </form>
-        <p class="footer">Already have an account? <a href="{{route('login')}}">Login</a></p>
+        <p class="footer">Already have an account? <a href="{{route('admin.home')}}">Back</a></p>
     </div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
