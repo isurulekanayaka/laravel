@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
     // Delete user
     Route::delete('/delete-user/{user}', [UserController::class, 'Delete']);
 
+
     Route::post('/admin/adduser', [UserController::class, 'addUser'])->name('admin.adduser');
 
     Route::get('/admin/adduser', [UserController::class, 'showAddUserForm'])->name('admin.adduser');

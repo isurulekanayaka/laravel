@@ -114,10 +114,15 @@ class UserController extends Controller
 
     public function Delete(User $user)
     {
-            $user->delete();
-        
+        // Delete related posts first
+        $user->posts()->delete(); // Assuming you have a posts relationship defined in your User model
+    
+        // Now you can safely delete the user
+        $user->delete();
+    
         return redirect('admin/home');
-    }    
+    }
+    
 
     public function showAddUserForm(){
         return view('admin.adduser');

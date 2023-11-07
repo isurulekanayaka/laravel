@@ -32,7 +32,8 @@
 <body>
     @include('layouts.adminnav')   
     @if(Auth::check())
-    <h1 class="mb-4">Welcome Admin, {{ Auth::user()->name }}</h1>
+    @if(Auth::user()->user_type == 'admin')
+    <h1 class="mb-4">Welcome {{Auth::user()->user_type}}, {{ Auth::user()->name }}</h1>
     <div class="container-fluid mt-4">
         <div class="row">
             
@@ -54,8 +55,9 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>password</th>
                         <th>User Type</th>
-                        <th>Action</th>
+                        <th>Action</th><th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +71,9 @@
                                 </td>
                                 <td>
                                     <input type="text" name="email" value="{{ $user->email }}" class="form-control">
+                                </td>
+                                <td>
+                                    {{-- <input type="text" name="password" value="{{ decrypt($user->password) }}" class="form-control"> --}}
                                 </td>
                                 <td>
                                     <input type="text" name="user_type" value="{{ $user->user_type }}" class="form-control">
@@ -110,7 +115,11 @@
                 }
             </script>
         </div>
-    </div>
+    </div>@else
+    @php
+        header("Location: /login");
+        exit();
+    @endphp@endif
     @else
     @php
         header("Location: /login");
