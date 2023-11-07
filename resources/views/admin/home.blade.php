@@ -72,9 +72,6 @@
                                     <input type="text" name="email" value="{{ $user->email }}" class="form-control">
                                 </td>
                                 <td>
-                                    {{-- <input type="text" name="password" value="{{ decrypt($user->password) }}" class="form-control"> --}}
-                                </td>
-                                <td>
                                     <input type="text" name="user_type" value="{{ $user->user_type }}" class="form-control">
                                 </td>
                                 <td>
