@@ -6,11 +6,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('logout') }}">Logout <span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>

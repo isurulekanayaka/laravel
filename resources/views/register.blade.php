@@ -78,6 +78,7 @@
             <div class="form-group">
                 <select name="user_type" class="form-control" required>
                     <option value="user">User</option>
+                    {{-- <option value="admin">Admin</option> --}}
                 </select>
             </div>
             

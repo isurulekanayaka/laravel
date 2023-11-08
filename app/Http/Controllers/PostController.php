@@ -66,4 +66,21 @@ class PostController extends Controller
         }
         return redirect('user/postView');
     }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $results = Post::where('title', 'like', '%' . $query . '%')
+                ->orWhere('body', 'like', '%' . $query . '%')
+                ->orWhereHas('user', function($queryUser) use ($query) {
+                    $queryUser->where('name', 'like', '%' . $query . '%');
+                })
+                ->with('user')
+                ->get();
+
+
+        return view('user/postShow', compact('results'));
+    }
+
 }

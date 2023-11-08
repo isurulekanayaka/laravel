@@ -145,4 +145,11 @@ class UserController extends Controller
 
         return redirect()->route('admin.adduser')->with('success', 'User added successfully!');
     }
+    public function showPost()
+    {
+        $users = User::with('posts')->get(); // Assuming you have a relationship defined between users and posts
+        $results=null;
+
+        return view('user/postShow', compact('users','results'));
+    }
 }

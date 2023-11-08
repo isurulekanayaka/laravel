@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImgController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 
@@ -47,12 +48,14 @@ Route::get('/user/logout', [UserController::class, 'userLogOut'])->name('userlog
 
 Route::get('/user/postView', [PostController::class, 'postView'])->name('user.postView');
 Route::post('/user/postView', [UserController::class, 'postView'])->name('user.postView');
-
+Route::get('/user/postShow',[UserController::class,'showPost'])->name('user.postShow');
 
 Route::get('/edit-post/{post}',[PostController::class,'ShowEdit']);
 Route::get('/edit-post/{post}',[PostController::class,'EditPost']);
 Route::delete('/delete-post/{post}',[PostController::class,'Delete']);
 Route::get('/delete-post/{post}',[PostController::class,'Delete']);
+Route::get('/search', [PostController::class, 'search'])->name('search');
+Route::get('/user/img', [PostController::class, 'uploadimg'])->name('user.img');
 
 
 Route::put('/edit-post/{post}', [PostController::class, 'EditPost'])->name('update-post');

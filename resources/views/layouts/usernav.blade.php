@@ -7,10 +7,14 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('user.home') }}">Home <span class="sr-only">(current)</span></a>
-            </li>
+            </li><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.postView') }}">Post View</a>
-            </li>
+                <a class="nav-link" href="{{ route('user.postView') }}">My Post</a>
+            </li><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('user.postShow') }}">View Post</a>
+            </li><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+            <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('userlogout') }}">Logout</a>
             </li>
